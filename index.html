@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>woodcutool</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Woodcut Tool - 木版画工具</title>
+<link rel="stylesheet" href="woodcut-styles.css">
+</head>
+<body>
+<div class="app-shell">
+<aside class="control-panel">
+<div class="panel-inner">
+<header class="panel-header">
+<span class="brand">WOODCUT TOOL</span>
+</header>
+<div class="panel-scroll">
+<div class="upload-panel">
+<div class="upload-area empty" id="uploadArea">
+<span class="upload-text">Choose Image</span>
+<div class="upload-preview">
+<img id="contentImage" alt="上传的图片">
+<div class="upload-placeholder" id="uploadPlaceholder">
+<span class="upload-icon">●●</span>
+</div>
+</div>
+</div>
+<input type="file" id="imageUpload" accept="image/*">
+</div>
+<div class="color-palette-section">
+<label for="colorPalette" class="control-label">色彩方案</label>
+<div class="select-wrapper">
+<select id="colorPalette">
+<option value="classic" selected>经典 (纯白)</option>
+<option value="red-black">红黑</option>
+<option value="blue-ochre">蓝赭</option>
+<option value="green-sepia">绿褐</option>
+<option value="chinese-red">中国红</option>
+<option value="prussian-blue">普鲁士蓝</option>
+<option value="earth-tones">大地色</option>
+<option value="japanese-indigo">日本靛蓝</option>
+</select>
+<svg class="select-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</div>
+</div>
+<div class="color-controls" id="colorControls">
+<div class="color-row">
+<div class="color-item">
+<span class="control-label">BG</span>
+<button class="color-swatch" data-color="#d4b8b4" data-for="bg" style="background:#d4b8b4; border:1px solid #ddd;"></button>
+<button class="color-swatch" data-color="#d4b8b4" data-for="bg"></button>
+<button class="color-swatch" data-color="#adaaa5" data-for="bg"></button>
+<button class="color-swatch" data-color="#b7b7bd" data-for="bg"></button>
+<button class="color-swatch" data-color="#aab8ab" data-for="bg"></button>
+<input type="color" id="backgroundColor" value="#ffffff">
+</div>
+</div>
+<div class="color-row">
+<div class="color-item fg-item">
+<span class="control-label">FG</span>
+<button class="color-swatch" data-color="#53565c" data-for="fg"></button>
+<button class="color-swatch" data-color="#a08887" data-for="fg"></button>
+<button class="color-swatch" data-color="#b1acb3" data-for="fg"></button>
+<button class="color-swatch" data-color="#60656c" data-for="fg"></button>
+<button class="color-swatch" data-color="#4a7056" data-for="fg"></button>
+<input type="color" id="foregroundColor" value="#53565c">
+</div>
+</div>
+</div>
+<div class="controls-wrapper">
+<div class="control-group">
+<div class="control-header">
+<span class="control-label">阈值</span>
+<span class="control-value" id="thresholdValue">128</span>
+</div>
+<input type="range" id="threshold" min="0" max="255" value="128">
+</div>
+<div class="control-group">
+<div class="control-header">
+<span class="control-label">边缘强度</span>
+<span class="control-value" id="edgeValue">3.0</span>
+</div>
+<input type="range" id="edgeStrength" min="0.5" max="5" value="3.0" step="0.1">
+</div>
+<div class="control-group">
+<div class="control-header">
+<span class="control-label">平滑度</span>
+<span class="control-value" id="smoothnessValue">30</span>
+</div>
+<input type="range" id="smoothness" min="1" max="100" value="30" step="1">
+</div>
+<div class="control-group">
+<div class="control-header">
+<span class="control-label">细节保留</span>
+<span class="control-value" id="detailValue">50</span>
+</div>
+<input type="range" id="detailLevel" min="1" max="100" value="50" step="1">
+</div>
+</div>
+<div class="preset-section">
+<div class="preset-row">
+<div class="preset-select">
+<label for="stylePreset" class="control-label select-label">预设样式</label>
+<div class="select-wrapper">
+<select id="stylePreset">
+<option value="graphic" selected>图形风格</option>
+<option value="vans-style">VANS风格</option>
+<option value="roche-style">Roche风格</option>
+<option value="minimal">极简风格</option>
+</select>
+<svg class="select-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</div>
+</div>
+<button id="resetSettings" class="btn btn-outline">Reset</button>
+</div>
+</div>
+<div class="aspect-ratio-section">
+<div class="aspect-ratio-header">
+<span class="control-label">画布比例</span>
+<div class="aspect-ratio-buttons">
+<button class="ratio-btn active" data-ratio="3:4">3:4</button>
+<button class="ratio-btn" data-ratio="4:3">4:3</button>
+<button class="ratio-btn" data-ratio="1:1">1:1</button>
+</div>
+</div>
+</div>
+<div class="download-section">
+<span class="control-label">Export</span>
+<div class="download-actions">
+<button id="downloadPng" class="btn btn-outline">PNG</button>
+<button id="downloadJpg" class="btn btn-outline">JPG</button>
+<button id="downloadSvg" class="btn btn-outline">SVG</button>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<main class="preview-area">
+<div class="canvas-stage" id="canvasStage">
+<canvas id="styledCanvas"></canvas>
+</div>
+<canvas id="originalCanvas" class="hidden-canvas"></canvas>
+</main>
+</div>
+<script src="woodcut-script.js"></script>
+</body>
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
